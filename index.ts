@@ -36,6 +36,17 @@ app.delete("/todos/:id", (c) => {
   return c.json({ success: true });
 });
 
+// 6. 归档已完成的任务
+app.post("/archive", async (c) => {
+  // 第一步：查找所有已完成的任务
+  // 提示：WHERE 子句
+  const finishedTodos = db.query("SELECT * FROM todos WHERE completed = 1").all();
+
+  // ... (后面我们再写文件操作)
+
+  return c.json({ message: `归档了 ${finishedTodos.length} 个任务` });
+});
+
 // 启动服务器
 console.log("服务器运行在 http://localhost:3000");
 export default {
