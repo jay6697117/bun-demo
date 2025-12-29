@@ -73,8 +73,24 @@ console.log("服务器运行在 http://localhost:3000");
 
 // Serve frontend static files
 import { serveStatic } from "hono/bun";
-app.use("/*", serveStatic({ root: "./frontend/dist" }));
-app.get("*", serveStatic({ path: "./frontend/dist/index.html" }));
+
+app.get("/", (c) => {
+  return c.json({
+    message: "后端 API 服务正常运行中 🚀",
+    docs: "/todos",
+    frontend_dev: "http://localhost:5173" // 提示开发环境地址
+  });
+});
+
+// 仅在生产环境或明确要求时提供静态文件服务
+// 在开发环境 (bun run dev) 下，我们应该使用 Vite (端口 5173) 以获得热更新
+if (process.env.NODE_ENV === "production") {
+  console.log("📦 生产环境：启用静态文件托管");
+  app.use("/*", serveStatic({ root: "./frontend/dist" }));
+  app.get("*", serveStatic({ path: "./frontend/dist/index.html" }));
+} else {
+  console.log("🛠️ 开发环境：静态文件托管已禁用，请访问 http://localhost:5173");
+}
 
 export default {
   port: 3000,
