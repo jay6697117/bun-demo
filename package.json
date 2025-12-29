@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "fe": "cd frontend && npm install && npm run dev && rm -rf dist/**/* && npm run build",
+    "fe": "cd frontend && npm install && rm -rf dist/**/* && npm run build && npm run dev",
     "be": "bun index.ts",
-    "dev": "bun run fe && bun run be"
+    "dev": "bun run fe & bun run be"
   },
   "devDependencies": {
     "@types/bun": "latest"
