@@ -1,7 +1,10 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import db from "./db";
 
 const app = new Hono();
+
+app.use("/*", cors());
 
 // 1. 获取所有待办事项列表
 app.get("/todos", (c) => {
@@ -15,7 +18,7 @@ app.post("/todos", async (c) => {
   const body = await c.req.json();
 
   // 使用 (?) 占位符安全插入数据
-  db.run("INSERT INTO todos (title) VALUES (?)", [body.title]);
+  db.run("INSERT INTO todos (title, content) VALUES (?, ?)", [body.title, body.content]);
 
   return c.json({ success: true });
 });
