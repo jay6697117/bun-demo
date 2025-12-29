@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import "./App.css";
 
 // Define the Todo interface based on the API response
@@ -13,6 +14,7 @@ interface Todo {
 const API_URL = "http://localhost:3000";
 
 function App() {
+  const { t, i18n } = useTranslation();
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState("");
   const [newContent, setNewContent] = useState("");
@@ -67,7 +69,7 @@ function App() {
 
   const deleteTodo = async (id: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!confirm("Confirm delete?")) return;
+    if (!confirm(t('action.delete.confirm'))) return;
 
     try {
       await fetch(`${API_URL}/todos/${id}`, {
@@ -80,7 +82,7 @@ function App() {
   };
 
   const archiveCompleted = async () => {
-    if (!confirm("Archive all completed tasks?")) return;
+    if (!confirm(t('action.archive.confirm'))) return;
 
     try {
       const res = await fetch(`${API_URL}/archive`, {
@@ -94,38 +96,52 @@ function App() {
     }
   };
 
+
   return (
     <div className="container">
       <header>
-        <h1>My Tasks</h1>
-        <div className="stats">
-          {todos.filter((t) => !t.completed).length} pending, {todos.filter((t) => t.completed).length} completed
+        <h1>{t('app.title')}</h1>
+        <div className="header-right">
+          <select
+            className="lang-select"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+          >
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en">🇺🇸 English</option>
+          </select>
         </div>
       </header>
+      <div className="stats-container">
+        <div className="stats">
+          {t('stats.pending', { count: todos.filter((t) => !t.completed).length })}, {t('stats.completed', { count: todos.filter((t) => t.completed).length })}
+        </div>
+      </div>
 
       <form onSubmit={addTodo} className="add-form">
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Task title..."
+          placeholder={t('form.add.placeholder.title')}
+          className="title-input"
           autoFocus
         />
-        <input
-          type="text"
+        <textarea
           value={newContent}
           onChange={(e) => setNewContent(e.target.value)}
-          placeholder="Details (optional)..."
+          placeholder={t('form.add.placeholder.content')}
           className="content-input"
+          rows={3}
         />
         <button type="submit" disabled={loading || !newTodo.trim()}>
-          {loading ? "Adding..." : "Add Task"}
+          {loading ? t('form.add.button.adding') : t('form.add.button.default')}
         </button>
       </form>
 
       <div className="todo-list">
         {todos.length === 0 ? (
-          <p className="empty-state">No tasks yet. Add one above!</p>
+          <p className="empty-state">{t('list.empty')}</p>
         ) : (
           todos.map((todo) => (
             <div
@@ -143,7 +159,7 @@ function App() {
               <button
                 className="delete-btn"
                 onClick={(e) => deleteTodo(todo.id, e)}
-                title="Delete"
+                title={t('action.delete.title')}
               >
                 ×
               </button>
@@ -154,7 +170,7 @@ function App() {
 
       {todos.some((t) => t.completed === 1) && (
         <button className="archive-btn" onClick={archiveCompleted}>
-          Archive Completed Tasks
+          {t('action.archive.button')}
         </button>
       )}
     </div>

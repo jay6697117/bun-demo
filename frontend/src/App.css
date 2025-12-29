@@ -35,6 +35,25 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lang-select {
+  padding: 0.4rem;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+  cursor: pointer;
+}
+
+.stats-container {
   margin-bottom: 2rem;
 }
 
@@ -55,29 +74,46 @@ h1 {
 
 .add-form {
   display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 2rem;
+  background: #333;
+  padding: 1.5rem;
+  border-radius: 12px;
 }
 
-.add-form input {
-  flex: 1;
+.add-form input,
+.add-form textarea {
+  width: 100%;
   padding: 0.8em 1.2em;
   border-radius: 8px;
   border: 1px solid #444;
-  background: #333;
+  background: #2a2a2a;
   color: white;
   font-size: 1em;
   outline: none;
   transition: border-color 0.25s;
+  box-sizing: border-box; /* Ensure padding doesn't overflow width */
+  font-family: inherit;
 }
 
-.add-form input:focus {
+.add-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.add-form input:focus,
+.add-form textarea:focus {
   border-color: #646cff;
 }
 
-.content-input {
-  flex: 2 !important; /* Give it more space if needed, or just same */
+.add-form button {
+  width: 100%;
+  background-color: #646cff;
+  margin-top: 0.5rem;
 }
+
+
 
 button {
   border-radius: 8px;
@@ -101,9 +137,7 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-.add-form button {
-  background-color: #646cff;
-}
+
 
 .add-form button:hover {
   background-color: #535bf2;
