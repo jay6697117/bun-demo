@@ -4,7 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun index.ts && cd frontend && bun install && bun run dev"
+    "fe": "cd frontend && bun install && bun run dev",
+    "be": "bun index.ts",
+    "dev": "bun run fe & bun run be"
   },
   "devDependencies": {
     "@types/bun": "latest"
