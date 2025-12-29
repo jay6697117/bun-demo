@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "fe": "cd frontend && bun install && bun run dev",
+    "fe": "cd frontend && bun install && bun run dev & bun run build",
     "be": "bun index.ts",
     "dev": "bun run fe & bun run be"
   },
