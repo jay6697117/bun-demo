@@ -3,11 +3,22 @@ version: '3.8'
 services:
   app:
     build: .
-    ports:
-      - "3000:3000"
+    # Ports are now internal only, exposed to Nginx via Docker network
+    expose:
+      - "3000"
     volumes:
       - ./todos.sqlite:/app/todos.sqlite
       - ./archive.txt:/app/archive.txt
     environment:
       - NODE_ENV=production
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
     restart: always
