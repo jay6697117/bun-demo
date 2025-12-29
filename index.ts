@@ -47,7 +47,7 @@ app.post("/archive", async (c) => {
 
   // 2. 准备要写入的文本内容
   const newContent = finishedTodos.map((t: any) =>
-    `[${t.created_at}] ${t.title}`
+    `[${t.created_at}] ${t.id} ${t.title} ${t.content}`
   ).join("\n") + "\n";
 
   // 3. 文件操作 (Bun.file)
