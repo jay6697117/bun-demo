@@ -75,6 +75,10 @@ h1 {
   border-color: #646cff;
 }
 
+.content-input {
+  flex: 2 !important; /* Give it more space if needed, or just same */
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
