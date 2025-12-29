@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import "./App.css";
+import { ChatFloatingButton, ChatDrawer } from './components/chat';
 
 // Define the Todo interface based on the API response
 interface Todo {
@@ -173,6 +174,10 @@ function App() {
           {t('action.archive.button')}
         </button>
       )}
+
+      {/* 聊天组件 */}
+      <ChatFloatingButton />
+      <ChatDrawer />
     </div>
   );
 }
