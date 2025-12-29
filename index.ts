@@ -70,6 +70,12 @@ app.post("/archive", async (c) => {
 
 // 启动服务器
 console.log("服务器运行在 http://localhost:3000");
+
+// Serve frontend static files
+import { serveStatic } from "hono/bun";
+app.use("/*", serveStatic({ root: "./frontend/dist" }));
+app.get("*", serveStatic({ path: "./frontend/dist/index.html" }));
+
 export default {
   port: 3000,
   fetch: app.fetch,

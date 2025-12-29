@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./todos.sqlite:/app/todos.sqlite
+      - ./archive.txt:/app/archive.txt
+    environment:
+      - NODE_ENV=production
+    restart: always
