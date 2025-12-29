@@ -13,6 +13,6 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "figlet": "^1.9.4"
+    "hono": "^4.11.3"
   }
 }
