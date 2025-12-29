@@ -238,7 +238,51 @@ button[disabled] {
   color: #888;
 }
 
-.archive-btn:hover {
-  background: #333;
-  color: white;
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+  body {
+    align-items: flex-start; /* Start from top on mobile */
+    background-color: #1a1a1a; /* Match container bg if needed, or dark */
+  }
+
+  .container {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100vh;
+    padding: 1rem;
+    background: #1a1a1a; /* Integrate seamlessly with background */
+  }
+
+  header {
+    flex-direction: row; /* Keep row but adjust if needed */
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .add-form {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  /* Larger touch targets */
+  .add-form input,
+  .add-form textarea,
+  .add-form button {
+    font-size: 16px; /* Prevent IOS zoom */
+    padding: 1em;
+  }
+
+  .todo-item {
+    padding: 1.2rem; /* Larger touch area */
+  }
+
+  .delete-btn {
+    padding: 0.5rem; /* Larger hit area */
+    font-size: 1.8em;
+  }
 }
