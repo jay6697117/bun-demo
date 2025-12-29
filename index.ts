@@ -38,13 +38,31 @@ app.delete("/todos/:id", (c) => {
 
 // 6. 归档已完成的任务
 app.post("/archive", async (c) => {
-  // 第一步：查找所有已完成的任务
-  // 提示：WHERE 子句
+  // 1. 查找已完成任务
   const finishedTodos = db.query("SELECT * FROM todos WHERE completed = 1").all();
 
-  // ... (后面我们再写文件操作)
+  if (finishedTodos.length === 0) {
+    return c.json({ message: "没有需要归档的任务" });
+  }
 
-  return c.json({ message: `归档了 ${finishedTodos.length} 个任务` });
+  // 2. 准备要写入的文本内容
+  const newContent = finishedTodos.map((t: any) =>
+    `[${t.created_at}] ${t.title}`
+  ).join("\n") + "\n";
+
+  // 3. 文件操作 (Bun.file)
+  const archivePath = "archive.txt";
+  const file = Bun.file(archivePath);
+
+  // 读取旧内容并追加新内容
+  const exists = await file.exists();
+  const oldContent = exists ? await file.text() : "";
+  await Bun.write(archivePath, oldContent + newContent);
+
+  // 4. 从数据库中删除已归档的任务
+  db.run("DELETE FROM todos WHERE completed = 1");
+
+  return c.json({ message: `成功归档了 ${finishedTodos.length} 个任务` });
 });
 
 // 启动服务器
