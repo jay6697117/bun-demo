@@ -1,1 +1,0 @@
-curl -X PUT http://localhost:3000/todos/1
